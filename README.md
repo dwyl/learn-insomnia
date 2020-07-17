@@ -57,10 +57,10 @@ Make sure you download and install **Insomnia Core**
 For this tutorial, we will be using an example rest server. Clone this repository,
 
 ```
-git clone https://github.com/dwyl/learn-nerves
+git clone https://github.com/dwyl/learn-insomnia
 ```
 
-In `learn-nerves` you should find a folder called `server`, and within that
+In `learn-insomnia` you should find a folder called `server`, and within that
 an executable called `server`, on mac run this using
 
 ```
