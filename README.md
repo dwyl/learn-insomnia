@@ -186,8 +186,8 @@ requests in our new ones. Lets do this now.
 Create a new get request called "View Item", then;
 
 + In the URL bar, set the url to `{{ host }}` like we did before. Add a 
-  slash afterwards (`{{ host }}/`) so the URL will be expanded to something
-  like `http://localhost:8080/`
+  slash afterwards (`{{ host }}/todo/`) so the URL will be expanded to something
+  like `http://localhost:8080/todo/`
 
 + Press CTRL-C to bring up the autocomplete menu. Scroll down to find
   `response => body attribute` and select it. This is a **template tag**
