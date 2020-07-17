@@ -123,4 +123,134 @@ As we can see, Insomnia is made of three key parts:
 + **Right Pane** This contains response infomation. Again, poke around!
   By default it shows the response body.
 
-## Step Two: Sending data
+### Step Two: Sending data
+
+Lets create a new route to send data to the server - POST Request!
+
+Create a new route, called "Create TODO". Same as last time, but select
+"POST" instead of "GET" in the creation modal.
+
+We could type the URL in again,
+which is fine for two or three routes but once you get to 20+ it starts
+getting tedious. Then what happens if the URL changes or we want to access 
+our production API? Do we need to go through and change every single URL?
+
+#### Templating
+
+Insomnia has great templating capability, so lets try it out to template in our
+URL!
+
+Click the "No environment" dropdown, then "Manage Environments".
+
+Then, press the "+" button next to sub environments. Create a public 
+environment. Double click the environemnt name ("New Environment") to edit it,
+and change it to something like "Development".
+
+Lets add a host environment variable that we can use in our URL:
+
+![Host Template](https://i.imgur.com/d7BPxi3.png)
+
+Lets go back to the requests and use our new template in the URL. Make sure
+your environment is not set to "Development" in the top left of the screen.
+
+For both requests, change the URL bar to `{{ host }}`
+
+#### Creating a POST request
+
+Our server accepts JSON data, so lets create JSON request in Insomnia.
+
+Go to the "Body" dropdown and select JSON. Our TODO list schema requires
+us to specify an `item` field in our JSON, so lets define our request now.
+
+Type this out in the `Body`:
+
+```json
+{
+	"item": "Review PR"
+}
+```
+
+Click "Send",  the server should respond with the complete body, with the 
+addition of an `id` assigned to the item.
+
+### Step 3: Chaining Responses
+
+Once APIs get complicated and large enough, most common tasks involve
+multiple requests and passing arguments and results from one request to the
+next. This can get tedious when requests have to be made multiple times,
+or involve lots of different parameters.
+
+Luckily, Insomnia has our back here too. We can use results from old
+requests in our new ones. Lets do this now.
+
+Create a new get request called "View Item", then;
+
++ In the URL bar, set the url to `{{ host }}` like we did before. Add a 
+  slash afterwards (`{{ host }}/`) so the URL will be expanded to something
+  like `http://localhost:8080/`
+
++ Press CTRL-C to bring up the autocomplete menu. Scroll down to find
+  `response => body attribute` and select it. This is a **template tag**
+  and these are effectively *functions* that we can use to transform data
+  from different parts of our app.
+
++ Insomnia shows this tag has an error, this is becuase we haven't
+  pointed it at any data yet - so lets do this now.
+
+Click on the tag to edit it.
+
+First, we need to select what request we want to pull data from. 
+In this case, we want to use the `ID` of the item we just created,
+so select `POST Add Todo`.
+
+Then, we need to select the specific bit of data we want from that response.
+Insomnia supports JSONPath - A JSON query language - so lets use that
+to pick out the ID.
+
+In `Filter`, write:
+
+```
+$.id
+```
+
+*`$` is our base response, and where selecting the `id` value*
+
+Your Tag should look like this:
+
+![Edit Tag](https://i.imgur.com/ZRAv36j.png)
+
+Press done, then 'Send'. You should get a response containing the 
+Todo you just created!.
+
+Ovbiously this is a simple example, but very quickly you can put
+together very powerful request chains that transform lots of data throughout
+your app. You can also combine these tags with the environment variables
+we specified earlier to make re-useable tags.
+
+### Step 4: Authentication
+
+Most APIs require some form of authentication to access. Insomnia has 
+support for many different types of authentication. We won't go into
+exploring all of these but we'll walkthrough a quick example of using a bearer
+token to authenticate.
+
+Open up the environemnt editor again by going 
+`Development -> Manage Environments`, and add another variable called "Token".
+Set this to "hunter2". 
+
+Create a new GET request called "View Admin Page" and set the URL to 
+`{{ host }}/admin`. 
+
+Go to the auth tab and select "Bearer token". This sets the `Authorization`
+header in the request. Go ahead and set that to our template, `{{ token }}`.
+
+Ignore the prefix for now.
+
+Press send and you should get a "Successfully Authenticated!" Response!.
+
+----
+
+The beauty of the template system is that you could change your environment in 
+future to "Production", declare your production values and then use your 
+production servers without having to change any of the induvidual requests!.
+

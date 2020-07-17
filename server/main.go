@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -32,6 +34,8 @@ var list = Todos{
 
 func main() {
 	router := httprouter.New()
+	router.GET("/todo/:id", View)
+	router.GET("/admin", Admin)
 	router.GET("/", Index)
 	router.POST("/", New)
 
@@ -56,4 +60,33 @@ func New(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	list = append(list, t)
 
 	json.NewEncoder(w).Encode(t)
+}
+
+// View gets one item
+func View(w http.ResponseWriter, r *http.Request, hp httprouter.Params) {
+	var todo *Todo
+	id, _ := strconv.Atoi(hp.ByName("id"))
+
+	for _, item := range list {
+		if item.ID == id {
+			todo = &item
+			break
+		}
+	}
+
+	if todo == nil {
+		w.WriteHeader(404)
+		fmt.Fprintf(w, "Item not found")
+	} else {
+		json.NewEncoder(w).Encode(*todo)
+	}
+}
+
+// Admin allows us to test protecting routes
+func Admin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	if r.Header.Get("Authorization") == "Bearer hunter2" {
+		fmt.Fprintf(w, "Successfully Authenticated!")
+	} else {
+		fmt.Fprint(w, "Authorization failed.")
+	}
 }
