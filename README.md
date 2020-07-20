@@ -52,7 +52,7 @@ https://insomnia.rest/download/
 
 Make sure you download and install **Insomnia Core**
 
-##### Example Server
+#### Example Server
 
 For this tutorial, we will be using an example rest server. Clone this repository,
 
@@ -60,13 +60,34 @@ For this tutorial, we will be using an example rest server. Clone this repositor
 git clone https://github.com/dwyl/learn-insomnia
 ```
 
+We have included two example Servers, functionally identical, but written
+in different styles/languages.
+
+If your familiar with Elixir and/or the MVC pattern, use the server in
+`elixir_server`, or if your familiar with go OR have little/no programming 
+knowledge, use the server in `go_server`.
+
+##### Elixir Server
+
+If your familiar with Elixir, there is a Phonix server included in
+`elixir_server`.
+
+Presuming you have Elixir setup and installed, run this by:
+
+```
+mix deps.get
+mix phx.server
+```
+
+##### Go Server
+
 In `learn-insomnia` you should find a folder called `server`, and within that
-an executable called `server`, on mac run this using
+an executable called `go_server`, on mac run this using
 
 ```
 ./server
 ```
-This will run a simple Todo-list REST server on port 8080.
+This will run a simple Todo-list REST server on port 4000.
 
 If you want to double check the source code, its in `main.go`.
 
@@ -103,7 +124,7 @@ Once  you've done that a URL bar should appear at the top of the Window,
 lets type in the URL of the local server you ran earlier:
 
 ```
-http://localhost:8080/
+http://localhost:4000/
 ```
 
 Click "send", and you should get a response!
@@ -187,7 +208,7 @@ Create a new get request called "View Item", then;
 
 + In the URL bar, set the url to `{{ host }}` like we did before. Add a 
   slash afterwards (`{{ host }}/todo/`) so the URL will be expanded to something
-  like `http://localhost:8080/todo/`
+  like `http://localhost:4000/todo/`
 
 + Press CTRL-C to bring up the autocomplete menu. Scroll down to find
   `response => body attribute` and select it. This is a **template tag**
