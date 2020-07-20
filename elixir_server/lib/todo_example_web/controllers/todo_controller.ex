@@ -12,4 +12,13 @@ defmodule TodoExampleWeb.TodoController do
   def create(conn, params) do
     json(conn, TodoExample.State.new_item(params))
   end
+
+  def admin(conn, _params) do
+    token = get_req_header(conn, "Authorization")
+
+    case token do
+      "Bearer hunter2" -> text(conn, "Authorized!")
+      _ -> text(conn, "Not authorized.")
+    end
+  end
 end
