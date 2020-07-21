@@ -52,7 +52,7 @@ func New(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var t Todo
 	err := json.NewDecoder(r.Body).Decode(&t)
 	if err != nil {
-		log.Print("Coudl not decode msg")
+		log.Print("Could not decode msg")
 	}
 
 	t.ID = idCounter
