@@ -14,7 +14,7 @@ defmodule TodoExampleWeb.TodoController do
   end
 
   def admin(conn, _params) do
-    token = get_req_header(conn, "Authorization")
+    token = List.first(get_req_header(conn, "authorization"))
 
     case token do
       "Bearer hunter2" -> text(conn, "Authorized!")
