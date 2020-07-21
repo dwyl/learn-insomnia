@@ -254,14 +254,18 @@ and click on "**Use Development**":
 Lets go back to the requests and use our new template in the URL. Make sure
 your environment is not set to "Development" in the top left of the screen.
 
-For both requests, change the URL bar to `{{ host }}`
+For both requests, change the URL bar to `{{ host }}`:
+
+![insomnia-host](https://user-images.githubusercontent.com/194400/88099716-78784380-cb93-11ea-85aa-e15c6d4a9c58.png)
 
 #### Creating a POST request
 
 Our server accepts JSON data, so lets create JSON request in Insomnia.
 
-Go to the "Body" dropdown and select JSON. Our TODO list schema requires
-us to specify an `item` field in our JSON, so lets define our request now.
+Go to the "Body" dropdown and select JSON. 
+Our TODO list schema requires
+us to specify an `item` field in our JSON, 
+so lets define our request now.
 
 Type this out in the `Body`:
 
@@ -271,32 +275,52 @@ Type this out in the `Body`:
 }
 ```
 
-Click "Send",  the server should respond with the complete body, with the 
-addition of an `id` assigned to the item.
+Click "Send", 
+the server should respond with the complete body, 
+with the addition of an `id` assigned to the item:
+
+![insomnia-post-request-review-pr](https://user-images.githubusercontent.com/194400/88099944-d016af00-cb93-11ea-888e-90d18ba15dd4.png)
+
+
 
 ### Step 3: Chaining Responses
 
-Once APIs get complicated and large enough, most common tasks involve
-multiple requests and passing arguments and results from one request to the
-next. This can get tedious when requests have to be made multiple times,
+Once APIs get complicated and large enough, 
+most common tasks involve multiple requests 
+and passing arguments and results 
+from one request to the next. 
+This can get tedious when requests have to be made multiple times,
 or involve lots of different parameters.
 
-Luckily, Insomnia has our back here too. We can use results from old
-requests in our new ones. Lets do this now.
+Luckily, Insomnia has our back here too. 
+We can use results from old requests in our new ones. 
+Lets do this now.
 
-Create a new get request called "View Item", then;
+Create a new get request called "View Item":
 
-+ In the URL bar, set the url to `{{ host }}` like we did before. Add a 
-  slash afterwards (`{{ host }}/todo/`) so the URL will be expanded to something
-  like `http://localhost:4000/todo/`
+![insomnia-new-request-view-item](https://user-images.githubusercontent.com/194400/88100580-9f834500-cb94-11ea-8ecb-ea3ec3295de5.png)
 
-+ Press CTRL-C to bring up the autocomplete menu. Scroll down to find
-  `response => body attribute` and select it. This is a **template tag**
-  and these are effectively *functions* that we can use to transform data
-  from different parts of our app.
 
-+ Insomnia shows this tag has an error, this is becuase we haven't
-  pointed it at any data yet - so lets do this now.
+
+In the URL bar, set the url to `{{ host }}` like we did before. 
+Add a slash afterwards (`{{ host }}/todo/`) 
+so the URL will be expanded to something like: 
+`http://localhost:4000/todo/`
+
+Press <kbd>Shift + Space</kbd> to bring up the autocomplete menu. 
+Scroll down to find `response => body attribute` and select it. 
+This is a **template tag**
+and these are effectively *functions* that we can use to transform data
+from different parts of our app.
+
+![response-autocomplete](https://user-images.githubusercontent.com/194400/88102724-f0e10380-cb97-11ea-9076-8e4c87385b4d.png)
+
+Insomnia shows this tag has an error:
+
+![insomnia-response-error](https://user-images.githubusercontent.com/194400/88102943-41586100-cb98-11ea-88c2-f0934ac38768.png)
+
+This is because we haven't pointed it at any data yet.
+so lets do this now
 
 Click on the tag to edit it.
 
@@ -306,7 +330,7 @@ so select `POST Add Todo`.
 
 Then, we need to select the specific bit of data we want from that response.
 Insomnia supports JSONPath - A JSON query language - so lets use that
-to pick out the ID.
+to pick out the ID:
 
 In `Filter`, write:
 
@@ -318,40 +342,50 @@ $.id
 
 Your Tag should look like this:
 
-![Edit Tag](https://i.imgur.com/ZRAv36j.png)
+![edit-tag](https://user-images.githubusercontent.com/194400/88108256-71a3fd80-cba0-11ea-9a94-9fb5b04410d9.png)
 
-Press done, then 'Send'. You should get a response containing the 
-Todo you just created!.
+Press **done**, then 'Send'. 
+You should get a response containing the 
+Todo you just created!
 
-Ovbiously this is a simple example, but very quickly you can put
-together very powerful request chains that transform lots of data throughout
-your app. You can also combine these tags with the environment variables
+![view-item](https://user-images.githubusercontent.com/194400/88108509-e5dea100-cba0-11ea-885b-93cfdd8fcfd1.png)
+
+Obviously this is a simple example, 
+but very quickly you can put together very powerful request chains 
+that transform lots of data throughout your app. 
+You can also combine these tags with the environment variables
 we specified earlier to make re-useable tags.
 
 ### Step 4: Authentication
 
 Most APIs require some form of authentication to access. Insomnia has 
 support for many different types of authentication. We won't go into
-exploring all of these but we'll walkthrough a quick example of using a bearer
+exploring all of these but we'll walk-through a quick example of using a bearer
 token to authenticate.
 
-Open up the environemnt editor again by going 
+Open up the environment editor again by going 
 `Development -> Manage Environments`, and add another variable called "Token".
-Set this to "hunter2". 
+Set this to "hunter2":
+
+![add-token-env-var](https://user-images.githubusercontent.com/194400/88108855-71f0c880-cba1-11ea-83f4-378904411115.png)
 
 Create a new GET request called "View Admin Page" and set the URL to 
-`{{ host }}/admin`. 
+`{{ host }}/admin`:
 
 Go to the auth tab and select "Bearer token". This sets the `Authorization`
 header in the request. Go ahead and set that to our template, `{{ token }}`.
 
+![admin-request](https://user-images.githubusercontent.com/194400/88109167-f6dbe200-cba1-11ea-8159-7e60b4d0eb7d.png)
+
 Ignore the prefix for now.
 
-Press send and you should get a "Successfully Authenticated!" Response!.
+Press **send** and you should get a "Successfully Authenticated!" Response!
+
+![auth-success](https://user-images.githubusercontent.com/194400/88109683-d9f3de80-cba2-11ea-8115-0a06b04dccf1.png)
 
 ----
 
 The beauty of the template system is that you could change your environment in 
 future to "Production", declare your production values and then use your 
-production servers without having to change any of the induvidual requests!.
+production servers without having to change any of the individual requests!
 
