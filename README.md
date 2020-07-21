@@ -1,7 +1,8 @@
 <div align="center">
 
 # Learn Insomnia
-Learn how to quickly develop and test APIs using Insomnia
+
+Learn how to quickly develop and test APIs using Insomnia.
 
 </div>
 
@@ -34,6 +35,10 @@ We will be using `insomnia-core` which is an API *consuming* tool. You still
 have to design and build the API yourself, but you can use Insomnia to test
 and consume your new API. API design itself it out of scope - if you want to
 learn how to do this: https://github.com/dwyl/learn-api-design
+
+
+> In case you're wondering about the _name_ of the product,
+**`insomnia`** is meant to be a play on "REST" ... as in REST API. 
 
 ## Who
 
@@ -74,7 +79,7 @@ knowledge, use the server in `go_server`.
 
 ##### Elixir Server
 
-If your familiar with Elixir, there is a Phonix server included in
+If your familiar with Elixir, there is a Phoenix server included in
 `elixir_server`.
 
 Presuming you have Elixir setup and installed, run this by:
@@ -182,9 +187,29 @@ Lets create a new route to send data to the server - POST Request!
 Create a new route, called "Create TODO". Same as last time, but select
 "POST" instead of "GET" in the creation modal.
 
-We could type the URL in again,
-which is fine for two or three routes but once you get to 20+ it starts
-getting tedious. Then what happens if the URL changes or we want to access 
+![insomnia-create-todo](https://user-images.githubusercontent.com/194400/88079300-6b4c5c00-cb75-11ea-9b9e-1ff96f748bcd.png)
+
+Once you've created the `POST` request, 
+you will need to enter some data,
+in order to execute the request.
+
+The URL is the same: `http://localhost:4000/` <br />
+You will need to send some data, e.g:
+
+```json
+{ "item": "hello world"}
+```
+
+![insomnia-post-request](https://user-images.githubusercontent.com/194400/88094089-e409e300-cb8a-11ea-8986-ada1ee52f880.png)
+
+You should expect to see a **`200`** response from the server
+confirming that your new todo `item` was created. 
+
+
+Manually inputting the URL for each new request
+is fine for two or three routes 
+but once you get to 20+ it starts getting tedious. 
+Then what happens if the URL changes or we want to access 
 our production API? Do we need to go through and change every single URL?
 
 
@@ -196,15 +221,35 @@ URL!
 
 Click the "No environment" dropdown, then "Manage Environments":
 
+![insomnia-manage-environments](https://user-images.githubusercontent.com/194400/88096864-3ea53e00-cb8f-11ea-9773-6062532bde3e.png)
 
 
-Then, press the "+" button next to sub environments. Create a public 
-environment. Double click the environemnt name ("New Environment") to edit it,
-and change it to something like "Development".
+Then, press the "+" button next to sub environments. 
+Create a public environment. 
+
+![insomnia-create-environment](https://user-images.githubusercontent.com/194400/88096984-6bf1ec00-cb8f-11ea-9061-73366a9e093a.png)
+
+Double click the environment name ("New Environment") to edit it:
+
+![insomnia-double-click-to-edit-environment-name](https://user-images.githubusercontent.com/194400/88097605-4fa27f00-cb90-11ea-9843-fd6d14e42b87.png)
+
+Change it to something like "Development":
+
+![insomnia-environment-developmet](https://user-images.githubusercontent.com/194400/88097702-78c30f80-cb90-11ea-8f56-8a21b6152d4e.png)
 
 Lets add a host environment variable that we can use in our URL:
 
-![Host Template](https://i.imgur.com/d7BPxi3.png)
+![insomnia-host-environment-variable](https://user-images.githubusercontent.com/194400/88097869-c475b900-cb90-11ea-9efb-0d30b74f24c6.png)
+
+Once you've clicked "Done" to finish creating the "Development" environment
+with the `"host"` variable, you will be taken back to the home view.
+
+To _use_ the development environment,
+you will need to select the "No Environment" drop down
+and click on "**Use Development**":
+
+![insomnia-use-development](https://user-images.githubusercontent.com/194400/88098016-00108300-cb91-11ea-93e0-5a047a88896d.png)
+
 
 Lets go back to the requests and use our new template in the URL. Make sure
 your environment is not set to "Development" in the top left of the screen.
