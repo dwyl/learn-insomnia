@@ -7,15 +7,16 @@ Learn how to quickly develop and test APIs using Insomnia
 
 ## Why?
 
-Insomnia is an easy to use REST API client useful for designing and
-debugging API's. 
+Insomnia is an easy to use REST API client 
+useful for designing and debugging API's. 
 
-There are many reasons to use Insomnia:
+There are many reasons to use Insomnia, 
+these are our top 3:
 
-+ It has a graphical user interface that allows for quick
-testing of different routes and configs.
-+ A powerful templating system that allows for complex setups with different 
-  auth flows and easy chaining of requests.
++ It has a graphical user interface 
+that allows for quick testing of different routes and configs.
++ A powerful templating system that allows for complex setups 
+  with different auth flows and easy chaining of requests.
 + Ability to share workspaces with colleagues or teammates.
 
 It's much easier to use than a web-browser or `cURL`, and can dramatically
@@ -48,9 +49,12 @@ this guide probaly isn't for you.
 
 The easiest way to do this is to install it from the official website:
 
-https://insomnia.rest/download/
+https://insomnia.rest/download
+
+![insomnia-core-download](https://user-images.githubusercontent.com/194400/88074844-deeb6a80-cb6f-11ea-9daf-ea694d4900a3.png)
 
 Make sure you download and install **Insomnia Core**
+
 
 #### Example Server
 
@@ -60,12 +64,13 @@ For this tutorial, we will be using an example rest server. Clone this repositor
 git clone https://github.com/dwyl/learn-insomnia
 ```
 
-We have included two example Servers, functionally identical, but written
-in different styles/languages.
+We have included two example Servers, 
+functionally identical, but written in different styles/languages.
 
-If your familiar with Elixir and/or the MVC pattern, use the server in
+If your familiar with `Elixir` and/or the MVC pattern, use the server in
 `elixir_server`, or if your familiar with go OR have little/no programming 
 knowledge, use the server in `go_server`.
+
 
 ##### Elixir Server
 
@@ -89,15 +94,28 @@ an executable called `go_server`, on mac run this using
 ```
 This will run a simple Todo-list REST server on port 4000.
 
-If you want to double check the source code, its in `main.go`.
+> If you want to double check the source code, its in `main.go`. <br />
+If you're curious about teh `Go` programming language,
+see: https://github.com/dwyl/learn-go <br />
+
 
 ### Step 1: Setup a new Workspace
 
-![Step 1](https://i.imgur.com/O6svSVZ.png)
+When you first open Insomnia core you will see an empty workspace:
 
-Go to the top left dropdown to create a new workspace.
+![image](https://user-images.githubusercontent.com/194400/88075291-7d77cb80-cb70-11ea-84a0-ef558e6cc11f.png)
 
-Name it "Todo-List" or something similar.
+
+Create a new Workspace by clicking the dropdown icon and **Create Workspace**:
+
+![step-1-insomnia-create-workspace](https://user-images.githubusercontent.com/194400/88075760-258d9480-cb71-11ea-94cd-d2dbe0ecc53f.png)
+
+
+Name it "Todo-List" or something similar:
+
+
+![insomnia-name-workspace-todo-list](https://user-images.githubusercontent.com/194400/88076197-afd5f880-cb71-11ea-9c21-138ea59b828b.png)
+
 
 A workspace in Insomnia is a collection of related routes and configuration.
 Most people use one workspace per project/website. Within one Workspace
@@ -111,14 +129,23 @@ you there are several other ways of organising your routes:
 
 ### Step 2: Create our first route
 
-Insomnia is a HTTP API client, so to consume APIs, we must first create a route,
-or a URL.
+Insomnia is an HTTP API client. 
+To consume APIs, we must first create a route or URL.
 
-Lets do that now:
+Lets do that now.
+Click on the **+** dropdown and create a **New Request**:
 
-![Step 2](https://i.imgur.com/Cf75cjj.png)
 
-Call it "List todos" or something similar and leave it as a GET request.
+
+![insomnia-create-new-request](https://user-images.githubusercontent.com/194400/88076587-296de680-cb72-11ea-9e55-e56fe545c888.png)
+
+
+
+Call it "List todos" or something similar 
+and leave it as a GET request:
+
+![insomnia-new-request-name](https://user-images.githubusercontent.com/194400/88076734-54f0d100-cb72-11ea-9c25-f3a2a6eb42b3.png)
+
 
 Once  you've done that a URL bar should appear at the top of the Window,
 lets type in the URL of the local server you ran earlier:
@@ -127,22 +154,26 @@ lets type in the URL of the local server you ran earlier:
 http://localhost:4000/
 ```
 
+![insomnia-url-send](https://user-images.githubusercontent.com/194400/88076886-87023300-cb72-11ea-8c62-63eb97264914.png)
+
 Click "send", and you should get a response!
 
-![step 2.1](https://i.imgur.com/5pmT98Q.png)
+![insomnia-response-3-columns](https://user-images.githubusercontent.com/194400/88077363-1b6c9580-cb73-11ea-86eb-ab01c8fb959e.png)
+
 
 As we can see, Insomnia is made of three key parts:
 
 + **Left Pane** This contains all your routes and current Workspace and
-  environements. You'll also see a `cookies` button, Insomnia keeps track
+  environments. You'll also see a `cookies` button, Insomnia keeps track
   of cookies as well!
 
-+ **Middle Pane** This contains request infomation. **Take some time** to 
-  ivestigate each of the tabs. We'll work on adding the `Body` and `auth`
++ **Middle Pane** This contains request information. **Take some time** to 
+  investigate each of the tabs. We'll work on adding the `Body` and `auth`
   sections later, but it's good to have an idea of how it all works.
 
-+ **Right Pane** This contains response infomation. Again, poke around!
++ **Right Pane** This contains response information. Again, poke around!
   By default it shows the response body.
+
 
 ### Step Two: Sending data
 
@@ -156,12 +187,16 @@ which is fine for two or three routes but once you get to 20+ it starts
 getting tedious. Then what happens if the URL changes or we want to access 
 our production API? Do we need to go through and change every single URL?
 
+
 #### Templating
 
-Insomnia has great templating capability, so lets try it out to template in our
+Insomnia has great templating capability, 
+so lets try it out to template in our
 URL!
 
-Click the "No environment" dropdown, then "Manage Environments".
+Click the "No environment" dropdown, then "Manage Environments":
+
+
 
 Then, press the "+" button next to sub environments. Create a public 
 environment. Double click the environemnt name ("New Environment") to edit it,
