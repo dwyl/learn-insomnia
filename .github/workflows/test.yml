@@ -18,7 +18,7 @@ jobs:
           inso-version: 3.5.0
 
       - name: Lint
-        run: inso lint spec "Designer Demo" --ci --src insomnia.json
+        run: inso lint spec "Basic Suite" --verbose --src insomnia.json
 
       - name: Run test suites
-        run: inso run test "Designer Demo" --env UnitTest --ci --src insomnia.json
+        run: inso run test "Basic Suite" --env UnitTest --ci --src insomnia.json
