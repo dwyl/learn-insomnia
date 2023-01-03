@@ -525,7 +525,7 @@ Select all the requests we've implemented.
 This will create a `JSON` file
 that Insomnia CLI can use to run the tests.
 You can place this in the root of your project
-and rename it to `.insorc.json`.
+and rename it to `insomnia.json`.
 
 To create our Github Action workflow `.yml` file,
 we can make use of the [`Setup Inso`](https://github.com/marketplace/actions/setup-inso) action
@@ -555,17 +555,14 @@ jobs:
           inso-version: 2.4.0
 
       - name: Lint
-        run: inso lint spec "Designer Demo" --ci
+        run: inso lint spec "Basic Suite" --verbose
 
       - name: Run test suites
-        run: inso run test "Designer Demo" --env UnitTest --ci
+        run: inso run test "Basic Suite" --env UnitTest --ci
 ```
 
-CLI will search for the root of the project for some items.
-You can find a list of them
-[in their documentation](https://docs.insomnia.rest/inso-cli/configuration).
 
-> Take note that if you are following the previous steps,
+> Take note that, if you are following the previous steps,
 your requests are pointing to `localhost:4000`.
 The CI will *fail* because nothing will be running on `localhost`
 inside the CI environment. 
