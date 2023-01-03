@@ -1,0 +1,18 @@
+name: Test
+
+jobs:
+  Linux:
+    name: Validate API spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 2.4.0
+
+      - name: Lint
+        run: inso lint spec "Designer Demo" --ci
+
+      - name: Run test suites
+        run: inso run test "Designer Demo" --env UnitTest --ci
