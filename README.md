@@ -552,15 +552,21 @@ jobs:
         uses: actions/checkout@v1
       - uses: kong/setup-inso@v1
         with:
-          inso-version: 2.4.0
+          inso-version: 3.5.0
 
       - name: Lint
-        run: inso lint spec "Basic Suite" --verbose
+        run: inso lint spec "my-spec.yaml" --ci --src insomnia.json
 
       - name: Run test suites
-        run: inso run test "Basic Suite" --env UnitTest --ci
+        run: inso run test "my-spec.yaml" --ci --env "Test Env" --src insomnia.json
 ```
 
+When running test suites, 
+we are running the [`inso run test`](https://docs.insomnia.rest/inso-cli/cli-command-reference/inso-run-test)
+command.
+We are stating we want to run the `my-spec.yaml` design document,
+inside the "Test Env" environment that was created for testing purposes.
+We are telling the CI to look for the `insomnia.json` file we created earlier.
 
 > Take note that, if you are following the previous steps,
 your requests are pointing to `localhost:4000`.
