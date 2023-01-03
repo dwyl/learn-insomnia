@@ -497,5 +497,73 @@ Check the following issues for more options:
 - https://github.com/Kong/insomnia/issues/3218
 - https://github.com/Kong/insomnia/issues/4482
 
+### Continuous integration
+
+You can use Insomnia to run the Test Suites
+you've created within a CI pipeline.
+
+In Github, you're most likely going to be using Github Actions.
+Luckily, Insomnia offers a [`CLI`](https://docs.insomnia.rest/inso-cli/introduction)
+that we can use whilst executing our CI pipelines.
+
+To quickly get it working,
+we need to follow a few steps to run our Test Suite.
+Inside the design document,
+click on it and select the `Import/Export` option
+
+![export_dropdown](https://user-images.githubusercontent.com/17494745/210420957-e4cc83bd-dc54-4bb5-bb34-71d892358518.png)
+
+Click on `Export Data`
+and choose the first option.
+
+![first_option](https://user-images.githubusercontent.com/17494745/210421062-c8bdeaf9-fc25-4152-8fc6-06e6f5212816.png)
+
+Select all the requests we've implemented.
+
+![select](https://user-images.githubusercontent.com/17494745/210421135-96fe649d-ab7d-4503-97a7-228281a68474.png)
+
+This will create a `JSON` file
+that Insomnia CLI can use to run the tests.
+You can place this in the root of your project
+and rename it to `.insorc.json`.
+
+To create our Github Action workflow `.yml` file,
+we can make use of the [`Setup Inso`](https://github.com/marketplace/actions/setup-inso) action
+to install the CLI.
+
+Create a file called `test.yml` inside `.github/workflows`
+and add the follow code.
+
+```yml
+name: Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  Linux:
+    name: Validate API spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 2.4.0
+
+      - name: Lint
+        run: inso lint spec "Designer Demo" --ci
+
+      - name: Run test suites
+        run: inso run test "Designer Demo" --env UnitTest --ci
+```
+
+CLI will search for the root of the project for some items.
+You can find a list of them
+[in their documentation](https://docs.insomnia.rest/inso-cli/configuration).
+
 
 
