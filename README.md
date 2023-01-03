@@ -565,5 +565,13 @@ CLI will search for the root of the project for some items.
 You can find a list of them
 [in their documentation](https://docs.insomnia.rest/inso-cli/configuration).
 
+> Take note that if you are following the previous steps,
+your requests are pointing to `localhost:4000`.
+The CI will *fail* because nothing will be running on `localhost`
+inside the CI environment. 
+Make sure the URL domain is accessible from Github Actions.
+>
+> In this repo's case,
+we are using [`phoenix-todo-list-tutorial`'s API](https://github.com/dwyl/phoenix-todo-list-tutorial).
 
 
