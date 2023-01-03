@@ -409,9 +409,93 @@ Press **send** and you should get a "Successfully Authenticated!" Response!
 
 ![auth-success](https://user-images.githubusercontent.com/17494745/210378906-1f0fb974-fe18-4e66-b21b-4a93d09e6bf2.png)
 
-----
-
 The beauty of the template system is that you could change your environment in 
 future to "Production", declare your production values and then use your 
 production servers without having to change any of the individual requests!
+
+### Testing our API
+
+Insomnia offers many features, including
+designing and debugging the API.
+It is *crucial* we thoroughly test an API
+before pushing it to production. 
+
+Let's create a **Test Suite** inside Insomnia.
+In the same project as before,
+
+![new_design_document](https://user-images.githubusercontent.com/17494745/210397589-87c77db6-e603-4a25-9398-8683414fd53b.png)
+
+click on the `+ Create` button
+and select `Design Document`.
+
+> A **design document** holds specifications, API requests and tests.
+We can sync design documents with Git.
+>
+>For more information, check https://docs.insomnia.rest/insomnia/get-started-with-documents.
+
+After naming the file to whatever you want,
+paste the code of the [`open_api_specs.yaml`](./open_api_specs.yaml) file.
+This file has the Open API Specification details of the API being used.
+
+![creating-design-document](https://user-images.githubusercontent.com/17494745/210398441-def13c83-39ed-4df8-b35c-e3bcaac76b23.png)
+
+On top of the file, click on the `Test` button.
+You will be prompted to create a new Test Suite.
+
+![test](https://user-images.githubusercontent.com/17494745/210399518-ed5a7cac-3fa2-44ef-afe5-62b1d74822ad.png)
+
+After clicking this button and naming your suite
+(we named ours "Basic Suite").
+
+Now click on the `Debug` button.
+You will see *it is empty*.
+Create the same requests we made earlier
+(list items, get specific item, create item).
+
+After this, you should have a screen similar to this.
+
+![image](https://user-images.githubusercontent.com/17494745/210401420-6d045b3a-048f-4d6d-8576-8428ff91094a.png)
+
+When creating a design document,
+we need to create the requests *within it*
+so they are accessible in the `Test` tab.
+
+Inside the `Test` tab, 
+click on the `New Test` button.
+A modal will appear to create a new one.
+Name it "Returns 200".
+
+![modal](https://user-images.githubusercontent.com/17494745/210401998-d29ee0ea-6314-4b00-bfb5-185552502dd3.png)
+
+Click on the `-- Create Request --` button,
+and choose the `List Items` option.
+
+
+![create-request](https://user-images.githubusercontent.com/17494745/210402341-214656d7-273e-4116-a8f4-b911a439e378.png)
+
+If you click on `Run Tests`, 
+the test should pass.
+
+#### Limitations
+
+As time of writing,
+you can only implement unit tests.
+For *stress testing*, 
+you [have to resort to other options](https://docs.insomnia.rest/insomnia/stress-testing).
+
+Additionally, even though you 
+can make manual changes to the unit test,
+you *can't dynamically change according to the environment.*
+
+![limitation](https://user-images.githubusercontent.com/17494745/210406349-bc86a291-1655-4e98-9316-c1d47625c6c4.png)
+
+This poses some limitations,
+as you can't tinker with variables for success and fail scenarios.
+
+These features are to be implemented, though.
+Check the following issues for more options:
+- https://github.com/Kong/insomnia/issues/3218
+- https://github.com/Kong/insomnia/issues/4482
+
+
 

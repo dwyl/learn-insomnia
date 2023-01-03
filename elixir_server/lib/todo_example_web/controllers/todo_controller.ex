@@ -10,7 +10,10 @@ defmodule TodoExampleWeb.TodoController do
   end
 
   def create(conn, params) do
-    json(conn, TodoExample.State.new_item(params))
+    case Map.get(params, "item") do
+      nil ->  conn |> put_status(400) |> json("Invalid parameters.")
+      item -> json(conn, TodoExample.State.new_item(params))
+    end
   end
 
   def admin(conn, _params) do
