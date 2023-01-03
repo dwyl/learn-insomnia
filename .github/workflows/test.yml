@@ -18,7 +18,7 @@ jobs:
           inso-version: 3.5.0
 
       - name: Lint
-        run: inso lint spec "Designer Demo" --ci
+        run: inso lint spec "Designer Demo" --ci --src .insorc.json
 
       - name: Run test suites
-        run: inso run test "Designer Demo" --env UnitTest --ci
+        run: inso run test "Designer Demo" --env UnitTest --ci --src .insorc.json
