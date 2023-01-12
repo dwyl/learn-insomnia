@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: Basic Todo List API
+  description: |-
+    This is a basic TodoList API created in Elixir.
+    
+    Find more in [https://github.com/dwyl/learn-insomnia](https://github.com/dwyl/learn-insomnia).
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  contact:
+    name: Dwyl
+  version: 1.0.11
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: todo
+    description: Operations about Todo Items
+paths:
+  /:
+    post:
+      tags:
+        - todo
+      summary: Add a new todo item
+      description: Creates a new todo item
+      operationId: addTodo
+      requestBody:
+        description: Add a new todo item
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - todo
+      summary: Lists todo items
+      description: Lists todo items
+      operationId: listTodos
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'          
+  /todos/{todoId}:
+    get:
+      tags:
+        - todo
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getTodoById
+      parameters:
+        - name: todoId
+          in: path
+          description: ID of todo to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'          
+components:
+  schemas:
+    Todo:
+      required:
+        - item
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        item:
+          type: string
+          example: Something to do today

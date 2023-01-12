@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Linux:
+    name: Validate API spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 3.5.0
+
+      - name: Lint
+        run: inso lint spec "my-spec.yaml" --ci --src insomnia.json
+
+      - name: Run test suites
+        run: inso run test "my-spec.yaml" --ci --env "Test Env" --src insomnia.json
